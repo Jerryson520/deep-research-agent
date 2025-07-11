@@ -92,7 +92,6 @@ class InterviewState(MessagesState):
 
 class SearchQuery(BaseModel):
     search_query: str = Field(None, description="Search Query for retrieval")
-    
 
 def generate_question(state: InterviewState):
     """ Node to generate a question """
@@ -409,7 +408,8 @@ def main_graph(max_analysts, topic, thread):
 if __name__ == "__main__":
     # Inputs
     max_analysts = 3 
-    topic = "The benefits of adopting LangGraph as an agent framework"
+    # topic = "The benefits of adopting LangGraph as an agent framework"
+    topic = "The Chinese's NBA player Hansen Yang."
     thread = {"configurable": {"thread_id": "1"}}
     report = main_graph(max_analysts, topic, thread)
     
