@@ -26,7 +26,6 @@ from prompts import (
 
 
 llm = ChatOpenAI(model="gpt-4o-mini")
-
 # ---------------- Generate Analysts ----------------
 class Analyst(BaseModel):
     affiliation: str = Field(
@@ -82,12 +81,16 @@ def human_feedback(state: GenerateAnalystsState):
     """ No-op node that should be interrupted on """
     pass
       
-# ---------------- Conduct Interviews ----------------
+# ---------------- Conduct Interviews ----------------    
 class InterviewState(MessagesState):
     max_num_turns: int
     context: Annotated[list, operator.add]
     analyst: Analyst
     interview: str
+    sections: list
+
+class InterviewOutputState(MessagesState):
+    max_num_turns: int
     sections: list
 
 class SearchQuery(BaseModel):
@@ -145,7 +148,6 @@ def search_wikipedia(state: InterviewState):
     
     return {"context": [formatted_search_docs]}
 
-
 def generate_answer(state: InterviewState):
     """ Node to answer a question """
     
@@ -166,7 +168,6 @@ def save_interview(state: InterviewState):
     interview = get_buffer_string(messages)
     
     return {"interview": interview}
-
 
 def route_messages(state: InterviewState, name: str = "expert"):
     """ Route between question and answer """
@@ -200,7 +201,7 @@ def write_section(state: InterviewState):
     return {"sections": [section.content]}  
 
 
-interview_builder = StateGraph(InterviewState)
+interview_builder = StateGraph(InterviewState, output_schema=InterviewOutputState)
 interview_builder.add_node("ask_question", generate_question)
 interview_builder.add_node("search_web", search_web)
 interview_builder.add_node("search_wikipedia", search_wikipedia)
@@ -387,12 +388,6 @@ def main_graph(max_analysts, topic, thread):
                         print(f"Description: {analyst.description}")
                         print("-" * 50)
         else:
-            # User is satisfied → pass None to allow process to continue
-            graph.update_state(
-                thread,
-                {"human_analyst_feedback": None},
-                as_node="human_feedback",
-            )
             break  # Exit feedback loop
 
     for event in graph.stream(None, thread, stream_mode="updates"):
