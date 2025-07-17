@@ -1,4 +1,6 @@
-analyst_instructions = """You are tasked with creating a set of AI analyst personas. Follow these instructions carefully:
+SYSTEM_PROMPT = """You are a helpful AI assistant for research tasks."""
+
+ANALYST_INSTRUCTIONS = """You are tasked with creating a set of AI analyst personas. Follow these instructions carefully:
 1. First, review the research topic:
 {topic}
 
@@ -12,8 +14,7 @@ analyst_instructions = """You are tasked with creating a set of AI analyst perso
 5. Assign one analyst to each theme.
 """
 
-
-question_instructions = """You are an analyst tasked with interviewing an expert to learn about a specific topic. 
+QUESTION_INSTRUCTIONS = """You are an analyst tasked with interviewing an expert to learn about a specific topic. 
 
 Your goal is boil down to interesting and specific insights related to your topic.
 
@@ -31,8 +32,7 @@ When you are satisfied with your understanding, complete the interview with: "Th
 
 Remember to stay in character throughout your response, reflecting the persona and goals provided to you."""
 
-
-search_instructions = f"""You will be given a conversation between an analyst and an expert. 
+SEARCH_INSTRUCTIONS = """You will be given a conversation between an analyst and an expert. 
 
 Your goal is to generate a well-structured query for use in retrieval and / or web-search related to the conversation.
         
@@ -42,8 +42,7 @@ Pay particular attention to the final question posed by the analyst.
 
 Convert this final question into a well-structured web search query"""
 
-
-answer_instructions = """You are an expert being interviewed by an analyst.
+ANSWER_INSTRUCTIONS = """You are an expert being interviewed by an analyst.
 
 Here is analyst area of focus: {goals}. 
         
@@ -71,9 +70,7 @@ When answering questions, follow these guidelines:
         
 And skip the addition of the brackets as well as the Document source preamble in your citation."""
 
-
-
-section_writer_instructions = """You are an expert technical writer. 
+SECTION_WRITER_INSTRUCTIONS = """You are an expert technical writer. 
             
 Your task is to create a short, easily digestible section of a report based on a set of source documents.
 
@@ -124,9 +121,7 @@ There should be no redundant sources. It should simply be:
 - Include no preamble before the title of the report
 - Check that all guidelines have been followed"""
 
-
-
-report_writer_instructions = """You are a technical writer creating a report on this overall topic: 
+REPORT_WRITER_INSTRUCTIONS = """You are a technical writer creating a report on this overall topic: 
 
 {topic}
     
@@ -160,8 +155,7 @@ Here are the memos from your analysts to build your report from:
 
 {context}"""
 
-
-intro_conclusion_instructions = """You are a technical writer finishing a report on {topic}
+INTRO_CONCLUSION_INSTRUCTIONS = """You are a technical writer finishing a report on {topic}
 
 You will be given all of the sections of the report.
 
